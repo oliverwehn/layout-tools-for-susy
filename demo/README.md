@@ -1,4 +1,5 @@
 # Layout Tools for Susy Demo
+See /sass/styles.scss und /sass/_page.scss files to see tools in use.
 
 ## Set up for playground
 Install SASS, Susy and Breakpoint:
