@@ -135,23 +135,23 @@
 
 .page__body {
   width: 80%;
-  max-width: 45.71429em;
+  max-width: 40em;
   margin: 0 auto;
   background-color: #888888; }
   @media all and (min-width: 50.0625em) {
     .page__body {
-      max-width: 66.66667em; } }
+      max-width: 75em; } }
 
 .spanner {
   background-color: #bbbbbb;
   border-top: 2px solid #444444;
-  padding: 0.71429em; }
+  padding: 0.625em; }
   .spanner--main {
     width: 100%;
     float: left;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 0.71429em; }
+    margin-bottom: 0.625em; }
     .spanner--main .spanner__counter::before {
       content: 'all'; }
   .spanner--right {
