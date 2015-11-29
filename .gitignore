@@ -1,0 +1,13 @@
+susy-*.gem
+*~
+*.DS_Store
+.sass-cache
+.rvmrc
+pkg/
+*.sublime-*
+docs/_build/
+bower_components/
+node_modules/
+demo/node_modules/
+Gemfile.lock
+*.css.map
