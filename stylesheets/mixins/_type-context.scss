@@ -1,0 +1,24 @@
+/**
+ * Changes the local type context without touching type base.
+ * @param  {px value}         $font-size                     Font size value.
+ * @param  {px value|Boolean} $line-height: 1.25*$font-size  Line height value, defaults to 1.25 times font size value.
+ * @param  {Boolean}          $set-styles:  true             Pass false to just switch type context without setting styles.
+ */
+@mixin type-context($font-size, $line-height: 1.25 * $font-size, $set-styles: true) {
+  // store context 
+  $local__font-size--parent: $local__font-size;
+  $local__line-height--parent: $local__line-height;
+  // override context
+  $local__font-size: $font-size !global;
+  $local__line-height: $line-height !global;
+  // set styles
+  @if($set-styles) {
+    font-size: calc-em($font-size, $local__font-size--parent);
+    line-height: calc-em($line-height, $local__font-size);
+  }
+  // include content
+  @content;
+  // restore previous context
+  $local__font-size: $local__font-size--parent !global;
+  $local__line-height: $local__line-height--parent !global;
+}

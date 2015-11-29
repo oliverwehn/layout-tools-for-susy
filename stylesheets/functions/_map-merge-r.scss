@@ -1,0 +1,24 @@
+/**
+ * Merges to SASS maps recursively
+ * @param  {Map}  $map1 Map to be merged into.
+ * @param  {Map}  $map2 Map to be merged into $map1.
+ * @return {Map}        Merged map.
+ */
+
+@function map-merge-r($map1, $map2) {
+  $map1-keys: map-keys($map1);
+  $map2-keys: map-keys($map2);
+  @each $key in $map1-keys {
+    @if(map-has-key($map1, $key)) {
+      $map1-value: map-get($map1, $key);
+      @if(type-of($map1-value) == map) {
+        $map2-value: map-get($map2, $key);
+        @if(type-of($map2-value) == map) {
+          $map1: map-set($map1, $key, map-merge-r($map1-value, $map2-value));
+        }
+        $map2: map-remove($map2, $key);
+      }
+    }
+  }
+  @return map-merge($map1, $map2);
+}

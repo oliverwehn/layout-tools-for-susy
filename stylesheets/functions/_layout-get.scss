@@ -1,0 +1,43 @@
+/**
+ * Retrieves a particular value from a group or a complete group or whole config from current or specified layout
+ * @param  {String|Boolean} $group:     false         Group of settings to be retrieved. Set to `false` for all groups of a layout.
+ * @param  {String|Boolean} $key:       false         Specifies particular setting to be retrieved. Set to `false` for all settings of a group.
+ * @param  {String|Boolean} $of-layout: false         Defines layout settings will be retrieved from. Set to `false` to retrieve from current layout.
+ * @return {CSS value|Map|Boolean}                    Returns a particular setting’s value, a map of settings, a layout map or false if requested resource doesn’t exist.
+ */
+
+@function layout-get($group: false, $key: false, $of-layout: false) {
+  
+  @if (type-of($of-layout) == string) {
+    @if (map-has-key($LAYOUTS, $of-layout)) {
+      $of-layout: layout-build($of-layout);
+    }
+    @else {
+      $of-layout: false;
+    }
+  }
+  @else {
+    $of-layout: $LAYOUT;
+  }
+
+  @if (type-of($of-layout) == map) {
+    @if ($group == false)  {
+      @return $of-layout;
+    }
+    @else {
+      @if (map-has-key($LAYOUT, $group)) {
+        $group: map-get($LAYOUT, $group);
+        @if($key == false) {
+          @return $group;
+        }
+        @else {
+          @if (map-has-key($group, $key)) {
+            @return map-get($group, $key);
+          }
+        }
+      }
+    }
+  }
+
+  @return false;
+}

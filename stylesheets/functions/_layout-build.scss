@@ -1,0 +1,36 @@
+/**
+ * Builds layout map by extending the layout defined in $this-layout accordingly to inheritence defined through `extends` setting or a particular layout defined through $with-layout parameter.
+ * @param  {String} $this-layout                      Key of the layout to be extended.
+ * @param  {String|Boolean} $with-layout:   false     Optional layout key to be extended with $this-layout
+ * @return {Map|Boolean}                              Returns map of extended layout or false, if a layout couldn’t be correctly retrieved from $LAYOUTS.
+ */
+
+@function layout-build($this-layout, $with-layout: false) {
+   @if (map-has-key($LAYOUTS, $this-layout)) {
+    $this-layout-map: map-get($LAYOUTS, $this-layout);
+    @if ($this-layout == default) {
+      @return $this-layout-map;
+    }
+    @if ($with-layout == false) {
+      @if (map-has-key($this-layout-map, extends)) {
+        $with-layout: map-get($this-layout-map, extends);
+      }
+      @else {
+        $with-layout: default;
+      }
+    }
+    @if ($with-layout) {
+      @if ($with-layout == default) {
+        @return map-merge-r(map-get($LAYOUTS, $with-layout), $this-layout-map);
+      }
+      @else {
+        $with-layout-map: layout-build($with-layout);
+        @return map-merge-r($with-layout-map, $this-layout-map);
+      }
+    }
+    @else {
+      @return $this-layout-map;
+    }
+  }
+  @return false;
+}

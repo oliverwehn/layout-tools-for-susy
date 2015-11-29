@@ -1,0 +1,10 @@
+/**
+ * Sets a value in an existing map.
+ * @param {Map}     $map   Map the value will be set in.
+ * @param {String}  $key   Key the value will be set for.
+ * @param {Misc}    $value Value to be set.
+ */
+@function map-set($map, $key, $value) {
+  $new: ($key: $value);
+  @return map-merge($map, $new);
+}

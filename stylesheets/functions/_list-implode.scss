@@ -1,0 +1,18 @@
+/**
+ * Implodes a list separating list items by $separator.
+ * @param  {List}    $list                  Sass list of misc items.
+ * @param  {String}  $separator: ''         Separator string.
+ * @param  {Boolean} $recursive: false      Optionally implode items of type list.
+ * @return {String}                         Imploded list as string.
+ */
+@function list-implode($list, $separator: '') {
+  $result: null;
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
+    @if (type-of($e) == list) {
+      $e: list-implode($e, $separator);
+    }
+    $result: if($i != length($list), $result#{$e}#{$separator}, $result#{$e});
+  }
+  @return $result;
+}

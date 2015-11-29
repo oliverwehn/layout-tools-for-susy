@@ -1,0 +1,8 @@
+/**
+ * Returns rem value for $px relative to constan root font size.
+ * @param  {px value}  $px Absolute pixel value.
+ * @return {rem value}     Rem value relative to root font size.
+ */
+@function px-to-rem($px) {
+  @return $px / const('ROOT_FONT_SIZE') * 1rem;
+}

@@ -1,0 +1,28 @@
+/**
+ * Sets one or multiple tone values for a color palette.
+ * @param {String}              $palette        Name of color palette.
+ * @param {String|Map}          $tone           Name of tone or–if no $value is given–map of tone-value pairs.
+ * @param {Color value|Boolean} $value: false   Color value to be set for $tone.
+ */
+@function color-set($palette, $tone, $value: false) {
+  $palette-map: ();
+  $tone-map: ();
+  
+  @if ($value) {
+    @if (map-has-key($COLORS, $palette)) {
+      $palette-map: map-get($COLORS, $palette);
+    }
+    $tone-map: ( $tone: $value);
+  }
+  @else {
+    @if (type-of($tone) == map) {
+      $tone-map: $tone;
+    }
+    @else {
+      @error 'Expected $tone to be a valid map. Was `#{type-of($tone)}`.';
+    }
+  }
+  $palette-map: map-merge($palette-map, ( $tone-map ));
+  $COLORS: map-merge($COLORS, ($palette: $palette-map)) !global;
+  @return true;
+}

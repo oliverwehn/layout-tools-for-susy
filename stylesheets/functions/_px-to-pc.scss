@@ -1,0 +1,9 @@
+/**
+ * Calculates the percentage value of $px relatively to $px-context.
+ * @param  {px value} $px          Part.
+ * @param  {px value} $px-context  Context.
+ * @return {% value}               Percentage value.
+ */
+@function px-to-pc($px, $px-context) {
+  @return percentages($px / $px-context);
+}

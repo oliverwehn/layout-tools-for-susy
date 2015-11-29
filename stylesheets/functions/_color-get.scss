@@ -1,0 +1,21 @@
+/**
+ * Returns a color value for a $tone from a defined $palette.
+ * @param  {String} $palette         Name of palette.
+ * @param  {String} $tone:   'base'  Name of tone, default to `base`.
+ * @return {Misc}                    Color value.
+ */
+@function color-get($palette, $tone: 'base') {
+  @if (map-has-key($COLORS, $palette)) {
+    $palette-map: map-get($COLORS, $palette);
+    @if (map-has-key($palette-map, $tone)) {
+      @return map-get($palette-map, $tone);
+    }
+    @else {
+      @error 'Tone `#{$tone}` doesn’t exist in palette `#{$palette}`';
+    }
+  }
+  @else {
+    @error 'Palette `#{$palette}` doesn’t exist';
+  }
+  @return false;
+}

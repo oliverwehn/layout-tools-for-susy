@@ -1,0 +1,13 @@
+/**
+ * Extends layout with map $extension.
+ * @param  {Map}    $extension              Map with additional layout settings.
+ * @param  {String} $layout-key: 'default'  Key of layout to be retrieved and returned after extension.
+ */
+@mixin layout-extend($with-layout) {
+  @if (type-of($with-layout) == map) {
+    $LAYOUT: layout-extend($with-layout) !global;
+  }
+  @else {
+    @error 'Expected $with-layout to be of type `map`, was `#{type-of($with-layout)}`.';
+  }
+}

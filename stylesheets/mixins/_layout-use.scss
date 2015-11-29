@@ -1,0 +1,94 @@
+/**
+ * Implements settings for layout defined by $layout-key locally for @content. Wraps @content in a media query if `breakpoint` settings are present in layout definition.
+ * @param  {String} $layout-key: default       Layout key of layout which’s settings to be used as context for @content. Can contain modifiers like `up` or `down` to only use min- or max-values of breakpoints.
+ */
+
+@mixin layout-use($layout-key: default) {
+  $valid-modes: (only, up, down);
+  $mode: only;
+  @if (type-of($layout-key) == list) {
+    @if (length($layout-key) > 1 AND nth($layout-key, 2) in $valid-modes) {
+      $mode: nth($layout-key, 2);
+    }
+    $layout-key: nth($layout-key, 1);
+  }
+  // temporarily store layout settings of parent context
+  $LAYOUT--parent: $LAYOUT;
+  $susy--parent: $susy;
+  // set new settings globally
+  $LAYOUT: layout-build($layout-key) !global;
+  $susy: layout-get(susy) !global;
+  // set typographic context
+  $typography: map-get($LAYOUT, typography);
+  $base__font-size--parent: $base__font-size;
+  $base__line-height--parent: $base__line-height;
+  $base__font-size: map-get($typography, base__font-size) !global;
+  $base__line-height: map-get($typography, base__line-height) !global;
+  // $local__font-size--parent: $local__font-size;
+  // $local__line-height--parent: $local__line-height;
+  // $local__font-size: map-get($typography, local__font-size) !global;
+  // $local__line-height: map-get($typography, local__line-height) !global;
+
+  // build media query
+  @if ($layout-key == default) {
+    @content;
+  }
+  @else {
+    $breakpoint: map-get($LAYOUT, breakpoint);
+    @if ($breakpoint) {
+      $query: ();
+
+      @if (type-of($breakpoint) != list) {
+        $breakpoint: ( $breakpoint, );
+      }
+      @each $bp in $breakpoint {
+        $sub-query: null;
+        @if (map-has-key($bp, medium)) {
+          $sub-query: (map-get($bp, medium) + unquote(''), );
+          $bp: map-remove($bq, medium);
+        }
+        @else {
+          $sub-query: ('all', );
+        }
+        @if ($mode == up) {
+          $bp: map-remove($bp, max-width);
+          $bp: map-remove($bp, max-device-width);
+          $bp: map-remove($bp, max-height);
+          $bp: map-remove($bp, max-device-height);
+        }
+        @if ($mode == down) {
+          $bp: map-remove($bp, min-width);
+          $bp: map-remove($bp, min-device-width);
+          $bp: map-remove($bp, min-height);
+          $bp: map-remove($bp, min-device-height);
+        }
+        @each $prop, $val in $bp {
+          @if (type-of($val) == 'number') {
+            @if(unit($val) == 'px') {
+              $val: px-to-em($val, const(ROOT_FONT_SIZE));
+            }
+          }
+          $sub-query: append($sub-query, '(' + $prop + ': ' + $val + ')');
+        }
+        $query: append($query, list-implode($sub-query, ' and '));
+      }
+      $query-string: list-implode($query, ', ');
+
+      @media #{$query-string} {
+        @include with-layout($susy) {
+          @content;
+        }
+      }
+    }
+  }
+  @else {
+    @content;
+  }
+  // restore parent layout settings
+  $LAYOUT: $LAYOUT--parent !global;
+  $susy: $susy--parent !global;
+  $base__font-size: $base__font-size--parent !global;
+  $base__line-height: $base__line-height--parent !global;
+  // $local__font-size: $local__font-size--parent !global;
+  // $local__line-height: $local__line-height--parent !global;
+}

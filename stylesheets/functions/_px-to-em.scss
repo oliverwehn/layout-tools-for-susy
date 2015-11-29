@@ -1,0 +1,9 @@
+/**
+ * Calculates a relative em value from $px relatively to $px-context.
+ * @param  {px value} $px         Value.
+ * @param  {px value} $px-context Context.
+ * @return {em value}             Relative em value.
+ */
+@function px-to-em($px, $px-context) {
+  @return $px / $px-context * 1em;
+}

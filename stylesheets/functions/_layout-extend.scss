@@ -1,0 +1,13 @@
+/**
+ * Extends layout with map $extension.
+ * @param  {Map}    $extension              Map with additional layout settings.
+ * @param  {String} $layout-key: 'default'  Key of layout to be retrieved and returned after extension.
+ * @return {Map}                            Returns extended layout map for $layout-key.
+ */
+@function layout-extend($extension, $layout-key: default) {
+  @if (type-of($extension) != map) {
+    @return false;
+  }
+  $LAYOUTS: map-merge-r($LAYOUTS, $extension) !global;
+  @return layout-get(false, false, $layout-key);
+}

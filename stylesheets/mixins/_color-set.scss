@@ -1,0 +1,9 @@
+/**
+ * Sets one or multiple tone values for a color palette.
+ * @param {String}              $palette        Name of color palette.
+ * @param {String|Map}          $tone           Name of tone or–if no $value is given–map of tone-value pairs.
+ * @param {Color value|Boolean} $value: false   Color value to be set for $tone.
+ */
+@mixin color-set($palette, $tone, $value: false) {
+  $color: color-set($palette, $tone, $value);
+}

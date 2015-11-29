@@ -1,0 +1,12 @@
+/**
+ * Retrieves value of a constant.
+ * Based on code by Hugo Giraudel, http://www.sitepoint.com/dealing-constants-sass/
+ * @param  {String} $name Name of constant.
+ * @return {Misc}         Value of constant.
+ */
+@function const($name) {
+  @if (map-has-key($CONSTANTS, $name)) {
+    @return map-get($CONSTANTS, $name);
+  }
+  @error 'Unknown constant `#{$name}`.';
+}

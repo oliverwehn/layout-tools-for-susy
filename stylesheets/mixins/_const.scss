@@ -1,0 +1,12 @@
+/**
+ * Defines a new constant.
+ * Based on code by Hugo Giraudel, http://www.sitepoint.com/dealing-constants-sass/
+ * @param  {String} $name  Name of new constant.
+ * @param  {Misc}   $value Value of constant
+ */
+@mixin const($name, $value) {
+  @if (map-has-key($CONSTANTS, $name)) {
+    @error 'Constant `#{$name}` is already defined.';
+  }
+  $CONSTANTS: map-merge($CONSTANTS, ( $name: $value )) !global;
+}
