@@ -1,0 +1,90 @@
+// Config
+$page: (
+  default: (
+    page: (
+      body__width: 80%,
+      body__max-width: 640px
+    )
+  ),
+  L: (
+    page: (
+      body__max-width: 1200px,
+
+    )
+  )
+);
+// Extend layout definitions
+@include layout-extend($page);
+
+.page {
+  &__body {
+    $body__width: layout-get(page, body__width);
+    $body__max-width: layout-get(page, body__max-width);
+    width: $body__width;
+    max-width: px-to-em($body__max-width, $base__font-size);
+    margin: 0 auto;
+    background-color: color-get(grey);
+
+    @include layout-use(L) {
+      $body__max-width: layout-get(page, body__max-width);
+      max-width: px-to-em($body__max-width, $base__font-size);
+
+    }
+  }
+
+  &__section {
+    @extend %clearfix;
+  }
+}
+
+.spanner {
+  background-color: color-get(grey, bright);
+  border-top: 2px solid color-get(grey, dark);
+  padding: px-to-em(10px, $base__font-size);
+
+  &--main {
+    @include span(full);
+    margin-bottom: px-to-em(10px, $base__font-size);
+
+    .spanner__counter {
+      &::before {
+        content: 'all';
+      }
+    }
+  }
+
+  &--right {
+    @include span(full);
+
+    .spanner__counter {
+      &::before {
+        content: 'all';
+      }
+    }
+  }
+
+  @include layout-use(L) {
+    &--main {
+      $columns: 8;
+      @include span($columns);
+      margin-bottom: 0;
+
+      .spanner__counter {
+        &::before {
+          content: $columns + '';
+        }
+      }
+    }
+
+    &--right {
+      $columns: 4;
+      @include span(last $columns);
+
+      .spanner__counter {
+        &::before {
+          content: $columns + '';
+        }
+      }
+    }
+  }
+}

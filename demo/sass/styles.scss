@@ -1,0 +1,65 @@
+// import layout tools
+@import '../../stylesheets/layout-tools-for-susy';
+
+// define layouts
+$layouts: (
+  default: (
+    susy: (
+      flow: ltr,
+      math: fluid,
+      output: float,
+      gutter-position: after,
+      container: auto,
+      container-position: center,
+      columns: 4,
+      gutters: .25,
+      column-width: false,
+      global-box-sizing: border-box,
+      last-flow: to,
+      debug: (
+        image: hide,
+        color: rgba(#66f, .25),
+        output: background,
+        toggle: top right,
+      ),
+      use-custom: (
+        background-image: true,
+        background-options: false,
+        box-sizing: true,
+        clearfix: false,
+        rem: true,
+      )
+    ),
+    typography: (
+      base__font-size: 14px,
+      base__line-height: 18px
+    )
+  ),
+  L: (
+    susy: (
+      columns: 12
+    ),
+    typography: (
+      base__font-size: 18px,
+      base__line-height: 24px
+    ),
+    breakpoint: (
+      min-width: 801px
+    )
+  )
+);
+// init layout
+@include layout-init($layouts);
+
+// define color
+@include color-set(grey, (
+  base: #888888,
+  bright: #bbbbbb,
+  dark: #444444
+));
+
+// box-sizing
+@include border-box-sizing;
+
+// import element-specific styles
+@import 'page';
