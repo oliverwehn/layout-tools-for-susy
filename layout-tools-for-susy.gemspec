@@ -1,35 +1,32 @@
-require 'rubygems'
+require './lib/layout-toos-for-susy'
 
-# Note that Sass's gem-compilation process requires access to the filesystem.
-# This means that it cannot be automatically run by e.g. GitHub's gem system.
-# However, a build server automatically packages the master branch
-# every time it's pushed to; this is made available as a prerelease gem.
-SASS_GEMSPEC = Gem::Specification.new do |spec|
-  spec.rubyforge_project = 'sass'
-  spec.name = 'sass'
-  spec.summary = "A powerful but elegant CSS compiler that makes CSS fun again."
-  spec.version = File.read(File.dirname(__FILE__) + '/VERSION').strip
-  spec.authors = ['Natalie Weizenbaum', 'Chris Eppstein', 'Hampton Catlin']
-  spec.email = 'sass-lang@googlegroups.com'
-  spec.description = <<-END
-      Sass makes CSS fun again. Sass is an extension of CSS, adding
-      nested rules, variables, mixins, selector inheritance, and more.
-      It's translated to well-formatted, standard CSS using the
-      command line tool or a web-framework plugin.
-    END
+Gem::Specification.new do |s|
+  # Release Specific Information
+  s.version = LayoutTools::VERSION
+  s.date = LayoutTools::DATE
 
-  spec.required_ruby_version = '>= 1.8.7'
-  spec.add_development_dependency 'yard', '>= 0.5.3'
-  spec.add_development_dependency 'maruku', '>= 0.5.9'
-  spec.add_development_dependency 'minitest', '>= 5'
+  # Gem Details
+  s.name = "layout-tools-for-susy"
+  s.rubyforge_project = "layout-tools-for-susy"
+  s.description = %q{Organize and handle layouts over multiple breakpoints}
+  s.summary = %q{Handy mixins and functions to handle layout settings for multiple breakpoints.}
+  s.authors = ["Oliver Wehn"]
+  s.email = ["hello@oliverwehn.com"]
+  s.homepage = "https://github.com/oliverwehn/layout-tools-for-susy"
+  s.licenses = ["MIT", "GPL-2.0"]
 
-  readmes = Dir['*'].reject{ |x| x =~ /(^|[^.a-z])[a-z]+/ || x == "TODO" }
-  spec.executables = ['sass', 'sass-convert', 'scss']
-  spec.files = Dir['rails/init.rb', 'lib/**/*', 'vendor/**/*',
-    'bin/*', 'test/**/*', 'extra/**/*', 'Rakefile', 'init.rb',
-    '.yardopts'] + readmes
-  spec.homepage = 'http://sass-lang.com/'
-  spec.has_rdoc = false
-  spec.test_files = Dir['test/**/*_test.rb']
-  spec.license = "MIT"
+  # Gem Files
+  s.files = ["README.md"]
+  s.files += ["CHANGELOG.md"]
+  s.files += Dir.glob("lib/**/*.*")
+  s.files += Dir.glob("stylesheets/**/*.*")
+
+  # Gem Bookkeeping
+  s.required_rubygems_version = ">= 1.3.6"
+  s.rubygems_version = %q{1.3.6}
+
+  s.add_dependency("sass",      ["~>3.3"])
+  s.add_dependency("sass-globbing",   ["~>1.1.0"])
+  s.add_dependency("susy",   ["~>2.2.7"])
+  s.add_dependency("breakpoint",   ["~>2.5.0"])
 end
