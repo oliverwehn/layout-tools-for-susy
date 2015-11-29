@@ -1,0 +1,38 @@
+{
+  "name": "layout-tools-for-susy",
+  "version": "1.0.0",
+  "homepage": "https://github.com/oliverwehn/layout-tools-for-susy",
+  "author": {
+    "name": "Oliver Wehn",
+    "email": "hello@oliverwehn.com",
+    "web": "http://oliverwehn.com"
+  },
+  "description": "Handy mixins and functions to handle layout settings for multiple breakpoints.",
+  "files": [
+    "./lib/_layout-tools-for-susy.sass",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:oliverwehn/layout-tools-for-susy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oliverwehn/layout-tools-for-susy/issues",
+    "email": "hello@oliverwehn.com"
+  },
+  "dependencies": {},
+  "keywords": [
+    "sass",
+    "scss",
+    "css",
+    "susy",
+    "breakpoints",
+    "mediaqueries",
+    "responsive",
+    "layout"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "sass-true": "^2.0.3"
+  }
+}
