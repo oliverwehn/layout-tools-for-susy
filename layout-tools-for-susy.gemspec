@@ -1,4 +1,4 @@
-require './lib/layout-toos-for-susy'
+require './lib/layout-tools-for-susy'
 
 Gem::Specification.new do |s|
   # Release Specific Information
@@ -26,7 +26,5 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
 
   s.add_dependency("sass",      ["~>3.3"])
-  s.add_dependency("sass-globbing",   ["~>1.1.0"])
   s.add_dependency("susy",   ["~>2.2.7"])
-  s.add_dependency("breakpoint",   ["~>2.5.0"])
 end
