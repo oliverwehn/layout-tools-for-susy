@@ -25,6 +25,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
   s.rubygems_version = %q{1.3.6}
 
-  s.add_dependency("sass",      ["~>3.3"])
-  s.add_dependency("susy",   ["~>2.2.7"])
+  s.add_dependency("sass",      ["~>3.0"])
+  s.add_dependency("susy",   ["~>2.2"])
 end
