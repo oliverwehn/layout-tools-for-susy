@@ -2,6 +2,54 @@
 
 Layout Tools for Susy is a set of handy mixins and functions to structure, organize and access layout settings over multiple breakpoints. Combined with the power of Susy’s grid calculations it allows you to set up responsive grid layouts fast and with ease.
 
+## Installation
+### NPM
+```bash
+$ npm install layout-tools-for-susy --save-dev
+```
+This installs layout tools and Susy. Include tools in your stylesheets like this:
+```scss
+// file: src/stylesheets/styles.scss
+@import '../../node_modules/layout-tools-for-susy/node_modules/susy/sass/susy',
+        '../../node_modules/layout-tools-for-susy/stylesheets/layout-tools-for-susy';
+```
+
+### Bower
+```bash
+$ bower install layout-tools-for-susy --save-dev
+```
+This installs layout tools and Susy. Include tools in your stylesheets like this:
+```scss
+// file: src/stylesheets/styles.scss
+@import '../../bower_components/susy/sass/susy',
+        '../../bower_components/layout-tools-for-susy/stylesheets/layout-tools-for-susy';
+```
+
+### Bundler
+Add layout tools to your ```Gemfile```.
+```
+source 'https://rubygems.org'
+
+gem 'sass', '~>3.4'
+gem 'layout-tools-for-susy', '~>0.1'
+```
+Install.
+
+```bash
+$ bundle install
+```
+Require layout tools and Susy for SASS compilation in your build tools or via command line.
+
+```bash
+$ sass --watch src/sass/styles.scss:build/css/styles.css --require=susy --require=layout-tools-for-susy
+```
+Include Susy and Layout Tools for Susy in your stylesheets.
+```sass
+// file: src/sass/styles.scss
+@import 'susy',
+        'layout-tools-for-susy';
+```
+
 ## How to use
 Since Susy2 switched to storing all grid settings in SASS maps, it seems to be quite a good idea to store other basic layout settings the same way. Layout Tools for Susy provides tools to store and access layout settings while making the interaction with SASS maps to a minimum. Let’s see how it’s done.
 
