@@ -1,10 +1,10 @@
 /**
  * Sets a base value and creates new absolute typographic context based on rem values.
- * @param  {px value}           $font-size                     Font size value.
- * @param  {px value|Boolean}   $line-height: 1.25*$font-size  Line height value, defaults to 1.25 times font size value-
+ * @param  {px value}           $font-size                     Font size value, default is global $base__font-size.
+ * @param  {px value|Boolean}   $line-height: 1.25*$font-size  Line height value, default is global $base__font-size
  * @param  {Booelan}            $set-styles:  true             Pass false to just switch type context without settings styles.
  */
-@mixin type-base($font-size, $line-height: 1.25 * $font-size, $set-styles: true) {
+@mixin type-base($font-size: $base__font-size, $line-height: $base__line-height, $set-styles: true) {
   // store current type settings temporarily
   $base__font-size--parent: $base__font-size;
   $base__line-height--parent: $base__line-height;
