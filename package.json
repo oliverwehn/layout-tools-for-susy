@@ -9,7 +9,8 @@
   },
   "description": "Handy mixins and functions to handle layout settings for multiple breakpoints.",
   "files": [
-    "./lib/_layout-tools-for-susy.sass",
+    "./stylesheets/_layout-tools-for-susy.scss",
+    "./stylesheets/**/*.{scss,sass}",
     "README.md"
   ],
   "repository": {
@@ -20,7 +21,9 @@
     "url": "https://github.com/oliverwehn/layout-tools-for-susy/issues",
     "email": "hello@oliverwehn.com"
   },
-  "dependencies": {},
+  "dependencies": {
+    "susy": "^2.2.6"
+  },
   "keywords": [
     "sass",
     "scss",

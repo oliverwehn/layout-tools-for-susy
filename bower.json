@@ -6,8 +6,10 @@
     "Oliver Wehn <hello@oliverwehn.com>"
   ],
   "description": "Handy mixins and functions to handle layout settings for multiple breakpoints.",
-  "main": "./lib/_layout-tools-for-susy.sass",
-  "ignore": ["demo"],
+  "main": "./stylesheets/_layout-tools-for-susy.scss",
+  "ignore": [
+    "demo"
+  ],
   "keywords": [
     "sass",
     "scss",
@@ -18,5 +20,8 @@
     "responsive",
     "layout"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "susy": "~2.2.7"
+  }
 }
