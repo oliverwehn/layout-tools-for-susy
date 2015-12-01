@@ -6,7 +6,7 @@ Layout Tools for Susy is a set of handy mixins and functions to structure, organ
 * [Installation](#installation)
   * [NPM](#npm)
   * [Bower](#bower)
-  * [Bundler](#bower)
+  * [Bundler](#bundler)
 * [How to use](#how-to-use)
   * [Defining layout contexts](#defining-layout-contexts)
   * [Using layout contexts](#using-layout-contexts)
@@ -306,6 +306,7 @@ As you can see, it's possible to define a single, simple breakpoint through addi
     }
   }
 }
+```
 That’s it. Easy, isn’t it? 
 
 ## More handy helpers
