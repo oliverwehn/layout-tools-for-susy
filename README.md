@@ -16,6 +16,7 @@ Layout Tools for Susy is a set of handy mixins and functions to structure, organ
   * [Separating layout settings](#separating-layout-settings)
   * [Defining layout breakpoints](#defining-layout-breakpoints)
 * [More handy helpers](#more-handy-helpers)
+  * [Units](#units)
   * [Typography](#typography)
   * [Colors](#colors)
   * [Constants](#constants)
@@ -322,6 +323,10 @@ $em-value: px-to-em(10px, $base__font-size);
 
 // Convert px to percentage
 $pc-value: px-to-pc(10px, 100px);
+
+// Convert px values in list to em
+$box__margin: 10px auto 40px auto;
+margin: list-px-to-em($box__margin);
 
 ```
 
