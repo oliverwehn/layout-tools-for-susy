@@ -2,6 +2,27 @@
 
 Layout Tools for Susy is a set of handy mixins and functions to structure, organize and access layout settings over multiple breakpoints. Combined with the power of Susy’s grid calculations it allows you to set up responsive grid layouts fast and with ease.
 
+## Table of Contents
+* [Installation](#installation)
+  * [NPM](#npm)
+  * [Bower](#bower)
+  * [Bundler](#bower)
+* [How to use](#how-to-use)
+  * [Defining layout contexts](#defining-layout-contexts)
+  * [Using layout contexts](#using-layout-contexts)
+  * [Settings groups](#settings-groups)
+  * [Susy settings](#susy-settings)
+  * [Base font size and line height](#base-font-size-and-line-height)
+  * [Separating layout settings](#separating-layout-settings)
+  * [Defining layout breakpoints](#defining-layout-breakpoints)
+* [More handy helpers](#more-handy-helpers)
+  * [Typography](#typography)
+  * [Colors](#colors)
+  * [Constants](#constants)
+* [Tips and tricks](#tips-and-tricks)
+* [Contribute](#contribute)
+
+
 ## Installation
 ### NPM
 ```bash
@@ -53,7 +74,7 @@ Include Susy and Layout Tools for Susy in your stylesheets.
 ## How to use
 Since Susy2 switched to storing all grid settings in SASS maps, it seems to be quite a good idea to store other basic layout settings the same way. Layout Tools for Susy provides tools to store and access layout settings while making the interaction with SASS maps to a minimum. Let’s see how it’s done.
 
-### Defining layouts and putting them to use
+### Defining layout contexts
 The foundation Layout Tools for Susy build on is a SASS map storing the basic layout settings for your Susy setup and more. Here’s an example:
 ```scss
 // Layout settings
@@ -119,7 +140,7 @@ $layouts: (
 ```
 The root properties of the map $layouts represent the different layout contexts. Layout contexts may be layout variations depending on breakpoints or layout settings specific for e.g. a certain template. There are some important settings that will be defined by default if you don’t set them yourself. The `default` layout will be set up by—you guessed it—default with the properties `susy`—containing Susy’s default settings—and `base`—setting a `base__font-size` and `base__line-height` value. To implement your custom layouts, you have to create your settings map like shown above overriding the defaults and adding additional layout specifications. 
 
-#### Layout contexts
+#### Using layout contexts
 The `default` layout context is the most basic. It will be used everywhere where no other layout context is set (by using the `layout-use` mixin). All other layout contexts extend the `default` context and thus override its settings. If you want to extend a specific context, you can define it using the `extends` property within a layout context’s definition map. In the example above the layout context `L` extends `M`. That means the settings and values you will be working with in the layout context `L` are the result from first merging `M` into `default` and then `L` into the first merge’s result. So within the context of `L` the value of `base__font-size` will be 18px. This behaviour allows you create a sophisticated system of layout settings through controlled inheritance of settings and values.
 
 As said before, after using ```@include layout-init($layouts);``` the `default` layout context is established. Switching to another context is done using the ```layout-use()``` mixin as shown below:
@@ -168,6 +189,14 @@ $layouts: (
   )
 )
 ```
+
+#### Susy settings
+The `susy` property represents the Susy settings map. For more information on configuration settings and how to work with Susy, go to: http://susydocs.oddbird.net/en/latest/
+
+#### Base font size and line height
+Within a layout context, there will be two global vars available named `$base__font-size` and `$base__line-height`. They are retrieved automatically from the current layout context’s settings. To override them, define the pixel values of your choice for ```base__font-size``` and ```base__line-height``` in your layout contexts’ ```base``` group.
+
+#### Separating layout settings
 To give you even more possibilities to modulize your SASS code base, you can keep e.g. component-specific settings with the corresponding styles in separate files and import them where needed. This is done by using the ```layout-extend()``` mixin like shown below:
 ```scss
 // separate file _my-component.scss
@@ -211,13 +240,6 @@ $my-component: (
 }
 
 ```
-
-#### Susy settings
-The `susy` property represents the Susy settings map. For more information on configuration settings and how to work with Susy, go to: http://susydocs.oddbird.net/en/latest/
-
-#### Base font size and line height
-Within a layout context, there will be two global vars available named `$base__font-size` and `$base__line-height`. They are retrieved automatically from the current layout context’s settings. To override them, define the pixel values of your choice for ```base__font-size``` and ```base__line-height``` in your layout contexts’ ```base``` group.
-
 
 ### Defining layout breakpoints
 Layout Tools for Susy make responsiveness easy. You can define breakpoints through adding the breakpoint property to any (but default) layout context like in this mobile first (smallest screen as default) example:
@@ -286,14 +308,121 @@ As you can see, it's possible to define a single, simple breakpoint through addi
 }
 That’s it. Easy, isn’t it? 
 
+## More handy helpers
+Layout Tools for Susy come with some more handy helpers.
 
+### Units
+```scss
+// Convert px to em
+$rem-value: px-to-rem(10px);
 
-### Typographic contexts
+// Convert px to em
+$em-value: px-to-em(10px, $base__font-size);
+
+// Convert px to percentage
+$pc-value: px-to-pc(10px, 100px);
+
+```
+
+### Typography
+Two really useful tools are the mixins called ```type-base``` and ```type-context```. Especially if you are trying to keep everything modular and try to deal with font sizes in a way similar to this approach: https://css-tricks.com/rems-ems/.
+
+The mixin ```type-base()``` will add style definitions for ```font-size``` and ```line-height``` in ```rem``` relatively to the root element’s font size with a pixel fallback. If no parameters are passed it will use the current layout context’s base font size and base line height. If you want to set a custom value, pass in a pixel value for font size and line height. If you pass content into the mixin, the globals $base__font-size, $base__line-height as well as $local__font-size and $local__line-height (more on this in a second) will be set to the new values within the mixins scope. That comes pretty handy if you want to reset the font size within a element or component to make it independent from the environment it will be used in.
+
+```scss
+...
+body {
+  // set base font size and line height in body element
+  @include type-base();  
+}
+
+.page {
+  
+  &__header {
+    // retrieve font sizes from layout context
+    $header__font-size: layout-get(page, header__font-size);
+    $header__line-height: layout-get(page, header__line-height);
+    // apply new font size and line height locally and relatively to base values using 'type-context()'
+    @include type-context($header__font-size, $header__line-height) {
+      // $base__font-size and $base__line-height stay the same
+      // $local__font-size and $local__line-height are set to the new values
+      // $local__font-size equals $header__font-size in here
+      // $local__line-height equals $header__line-height in here
+      padding: px-to-em(30px, $local__font-size) 0;
+    }
+  }
+}
+
+.my-component {
+  @extends %component;
+  // reset font size and line height to custom values
+  $component__font-size: layout-get(compontents, component__font-size);
+  $component__line-height: layout-get(compontents, component__line-height);
+  @include type-base($component__font-size, $component__line-height, false) {
+    // Font size and line height values are reset for all content passed into mixin
+    // $base__font-size equals $local__font-size equals $components__font-size in here
+    // $base__line-height equals $local__line-height equals $components__line-height in here
+    padding: px-to-em(10px, $local__font-size) 0;
+
+    &__title {
+      // retrieve font size and line height from current layout context
+      $title__font-size: layout-get(components, title__font-size);
+      $title__line-height: layout-get(components, title__line-height);
+      // set relative type context
+      @include type-context($title__font-size, $title__line-height) {
+        // $base__font-size and $base__line-height stay the same
+        // $local__font-size and $local__line-height are set to the new values
+        margin-bottom: px-to-em(15px, $local__font-size);
+
+        span {
+          @include type-context(.5 * $title__font-size, .5 * $title__line-height) {
+            ...
+          }
+        }
+      }
+    }
+  } 
+}
+```
+In the example above the ```type-context``` mixin is used to set new local font sizes and line heights as ```em``` values. In contrast to ```type-base``` the base values ```$base__font-size``` and ```$base__line-height``` won’t be altered within the mixins scope. Multiple type contexts can be embedded into each other and the mixin will take track of the relative font sizes and line heights and the necessary calculations.
 
 ### Colors
+```scss
+// Store colors
+// @include color-set($palette, $tone, $value);
+
+// Single color (defined as 'base' tone of 'blueish' palette)
+@include color-set(blueish, #000077);
+// Define complete palette 'blueish'
+@include color-set(blueish, (
+  bright: #0000fa,
+  base: #000077,
+  dark: #000042,
+  transparent: rgba(#000077, .75)
+));
+// Add tone to a palette (defined as 'bright' tone of 'blueish' palette)
+@include color-set(blueish, bright, #0000fa);
+
+// Get colors
+// $val: color-get($palette, $tone);
+
+// Get 'base' tone of 'blueish' palette
+color: color-get(blueish);
+
+// Get 'bright' tone of 'blueish' palette
+color: color-get(blueish, bright);
+
+```
 
 ### Constants
+```scss
+// Define new constant
+@include const('BG_IMG_PATH', '/assets/images/');
 
-### Naming styles
+// Retrieve constant
+background-image: url(const(BG_IMG_PATH) + 'hero_bg.jpg');
+```
+
+### Tips and tricks
 
 ### Contribute
