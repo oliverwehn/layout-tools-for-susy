@@ -219,7 +219,74 @@ The `susy` property represents the Susy settings map. For more information on co
 Within a layout context, there will be two global vars available named `$base__font-size` and `$base__line-height`. They are retrieved automatically from the current layout context’s settings. To override them, define the pixel values of your choice for ```base__font-size``` and ```base__line-height``` in your layout contexts’ ```base``` group.
 
 
-### Layouts and breakpoints
+### Defining layout breakpoints
+Layout Tools for Susy make responsiveness easy. You can define breakpoints through adding the breakpoint property to any (but default) layout context like in this mobile first (smallest screen as default) example:
+```scss
+$layouts: (
+  default: (
+    susy: (
+      ...
+    ),
+    base: (
+      ...
+    )
+  ),
+  M: (
+    susy: (
+      // new grid settings
+      ...
+    ),
+    base: (
+      // new base font size, etc.
+      ...
+    ),
+    breakpoint: (
+      ( 
+        min-width: 480px,
+        max-width: 800px,
+        min-height: 650px
+      ),
+      (
+        min-width: 640px,
+        max-width: 800px
+      )
+    )
+  ),
+  L: (
+    // we keep and grid settings
+    extend: M,
+    breakpoint: (
+      min-width: 801px
+    )
+  )
+)
+```
+As you can see, it's possible to define a single, simple breakpoint through adding media query properties directly as well as more complex breakpoints by providing multiple media queries as a list. You can just add any media query property value pair you need and even define media types by adding e.g. ```medium: screen``` (default is ```all```). As soon as you apply a layout context by using ```layout-use()```, all content passed into the mixin will be wrapped in a media query generated from your definition. As said before you can manipulate the media queries by passing one of the keywords ```down``` or ```up``` with the context name. Using the mixin within your stylesheets is pretty great, as you can define layout changes right where they belong like this:
+```scss
+...
+.section {
+  &--text {
+    // retrieve font size and line height from current layout context
+    $text__font-size: layout-get(section, text__font-size);
+    $text__line-height: layout-get(section, text__line-height);
+    @include type-context($text__font-size, $text__line-height) {
+      // convert px values to em using list-px-to-em() helper that also comes with Layout Tools
+      padding: list-px-to-em((30px 20px 40px), $local__font-size);
+    }
+
+    @include layout-use(M) {
+      // retrieve font size and line height from new layout context
+      $text__font-size: layout-get(section, text__font-size);
+      $text__line-height: layout-get(section, text__line-height);
+      @include type-context($text__font-size, $text__line-height) {
+        padding: list-px-to-em((30px 20px 40px), $local__font-size);
+      }      
+    }
+  }
+}
+That’s it. Easy, isn’t it? 
+
+
 
 ### Typographic contexts
 
