@@ -391,8 +391,6 @@ In the example above the ```type-context``` mixin is used to set new local font 
 // Store colors
 // @include color-set($palette, $tone, $value);
 
-// Single color (defined as 'base' tone of 'blueish' palette)
-@include color-set(blueish, #000077);
 // Define complete palette 'blueish'
 @include color-set(blueish, (
   bright: #0000fa,
