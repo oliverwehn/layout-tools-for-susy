@@ -13,8 +13,8 @@
   $local__line-height: $line-height !global;
   // set styles
   @if($set-styles) {
-    font-size: calc-em($font-size, $local__font-size--parent);
-    line-height: calc-em($line-height, $local__font-size);
+    font-size: px-to-em($font-size, $local__font-size--parent);
+    line-height: px-to-em($line-height, $local__font-size);
   }
   // include content
   @content;

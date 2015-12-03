@@ -18,8 +18,8 @@
   //set styles
   @if ($set-styles) {
     font-size: $base__font-size;
-    font-size: calc-rem($base__font-size);
-    line-height: calc-em($base__line-height, $base__font-size);
+    font-size: px-to-rem($base__font-size);
+    line-height: px-to-em($base__line-height, $base__font-size);
   }
   // include content
   @content;

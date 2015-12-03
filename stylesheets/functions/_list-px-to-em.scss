@@ -7,7 +7,7 @@
   @for $i from 1 through length($list) {
     $value: nth($list, $i);
     @if(type-of($value) == number and unit($value) == px) {
-      $list: set-nth($list, $i, calc-em($value, $context));
+      $list: set-nth($list, $i, px-to-em($value, $context));
     }
   }
   @return $list;
