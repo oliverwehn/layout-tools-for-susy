@@ -9,9 +9,7 @@
   },
   "description": "Handy mixins and functions to handle layout settings for multiple breakpoints.",
   "files": [
-    "./stylesheets/_layout-tools-for-susy.scss",
-    "./stylesheets/**/*.{scss,sass}",
-    "README.md"
+    "stylesheets"
   ],
   "repository": {
     "type": "git",
