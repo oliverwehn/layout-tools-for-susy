@@ -80,9 +80,9 @@
         }
       }
     }
-  }
-  @else {
-    @content;
+    @else {
+      @content;
+    }
   }
   // restore parent layout settings
   $LAYOUT: $LAYOUT--parent !global;
