@@ -32,7 +32,7 @@ $ npm install layout-tools-for-susy --save-dev
 This installs layout tools and Susy. Include tools in your stylesheets like this:
 ```scss
 // file: src/stylesheets/styles.scss
-@import '../../node_modules/layout-tools-for-susy/node_modules/susy/sass/susy',
+@import '../../node_modules/susy/sass/susy',
         '../../node_modules/layout-tools-for-susy/stylesheets/layout-tools-for-susy';
 ```
 
@@ -139,7 +139,7 @@ $layouts: (
 @include layout-init($layouts);
 
 ```
-The root properties of the map $layouts represent the different layout contexts. Layout contexts may be layout variations depending on breakpoints or layout settings specific for e.g. a certain template. There are some important settings that will be defined by default if you don’t set them yourself. The `default` layout will be set up by—you guessed it—default with the properties `susy`—containing Susy’s default settings—and `base`—setting a `base__font-size` and `base__line-height` value. To implement your custom layouts, you have to create your settings map like shown above overriding the defaults and adding additional layout specifications. 
+The root properties of the map $layouts represent the different layout contexts. Layout contexts may be layout variations depending on breakpoints or layout settings specific for e.g. a certain template. There are some important settings that will be defined by default if you don’t set them yourself. The `default` layout will be set up by—you guessed it—default with the properties `susy`—containing Susy’s default settings—and `base`—setting a `base__font-size` and `base__line-height` value. To implement your custom layouts, you have to create your settings map like shown above overriding the defaults and adding additional layout specifications.
 
 #### Using layout contexts
 The `default` layout context is the most basic. It will be used everywhere where no other layout context is set (by using the `layout-use` mixin). All other layout contexts extend the `default` context and thus override its settings. If you want to extend a specific context, you can define it using the `extends` property within a layout context’s definition map. In the example above the layout context `L` extends `M`. That means the settings and values you will be working with in the layout context `L` are the result from first merging `M` into `default` and then `L` into the first merge’s result. So within the context of `L` the value of `base__font-size` will be 18px. This behaviour allows you create a sophisticated system of layout settings through controlled inheritance of settings and values.
@@ -224,7 +224,7 @@ $my-component: (
 
 // Use styles
 .my-component {
-  
+
   &__label {
     // Retrieve settings from current layout context
     $label__font-size: layout-get(my-component, label__font-size);
@@ -264,7 +264,7 @@ $layouts: (
       ...
     ),
     breakpoint: (
-      ( 
+      (
         min-width: 480px,
         max-width: 800px,
         min-height: 650px
@@ -308,7 +308,7 @@ As you can see, it's possible to define a single, simple breakpoint through addi
   }
 }
 ```
-That’s it. Easy, isn’t it? 
+That’s it. Easy, isn’t it?
 
 ## More handy helpers
 Layout Tools for Susy come with some more handy helpers.
@@ -343,7 +343,7 @@ body {
 }
 
 .page {
-  
+
   &__header {
     // retrieve font sizes from layout context
     $header__font-size: layout-get(page, header__font-size);
@@ -387,7 +387,7 @@ body {
         }
       }
     }
-  } 
+  }
 }
 ```
 In the example above the ```type-context``` mixin is used to set new local font sizes and line heights as ```em``` values. In contrast to ```type-base``` the base values ```$base__font-size``` and ```$base__line-height``` won’t be altered within the mixins scope. Multiple type contexts can be embedded into each other and the mixin will take track of the relative font sizes and line heights and the necessary calculations.
