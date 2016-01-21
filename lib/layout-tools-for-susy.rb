@@ -12,6 +12,6 @@ else
 end
 
 module LayoutTools
-  VERSION = "0.1.6"
-  DATE = "2016-01-02"
+  VERSION = "0.1.7"
+  DATE = "2016-01-21"
 end

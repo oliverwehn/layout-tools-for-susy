@@ -34,6 +34,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "sass-true": "^2.0.3"
+    "event-stream": "^3.3.2",
+    "glob": "^6.0.4",
+    "lodash": "^4.0.0",
+    "sass-true": "^2.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
