@@ -5,14 +5,14 @@
  * @param  {Boolean} $recursive: false      Optionally implode items of type list.
  * @return {String}                         Imploded list as string.
  */
-@function list-implode($list, $separator: '') {
-  $result: null;
+@function list-implode($list, $separator: '', $recursive: false) {
+  $result: "";
   @for $i from 1 through length($list) {
     $e: nth($list, $i);
-    @if (type-of($e) == list) {
-      $e: list-implode($e, $separator);
+    @if (type-of($e) == list and $recursive) {
+      $e: list-implode($e, $separator, $recursive);
     }
-    $result: if($i != length($list), $result#{$e}#{$separator}, $result#{$e});
+    $result: if($i != length($list), $result + "#{$e}#{$separator}", $result + "#{$e}");
   }
-  @return $result;
+  @return unquote('') + $result;
 }
