@@ -1,0 +1,15 @@
+/**
+ * Pushs a value to a list in $CACHE map.
+ * @param {Map}     $map   Map the value will be set in.
+ * @param {String}  $key   Key the value will be set for.
+ * @param {Misc}    $value Value to be pushed.
+ * @return {map}    Merged map
+ */
+@function cache-push($key, $value) {
+  $list: cache-get($key);
+  @if (type-of($list) != list) {
+    @return false;
+  } 
+  $new: ( $key: join($list, ( $value ), comma) );
+  @return map-merge($CACHE, $new);
+}

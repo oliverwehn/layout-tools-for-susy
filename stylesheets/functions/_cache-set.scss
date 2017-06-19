@@ -1,0 +1,10 @@
+/**
+ * Sets a value in $CACHE map.
+ * @param {Map}     $map   Map the value will be set in.
+ * @param {String}  $key   Key the value will be set for.
+ * @param {Misc}    $value Value to be set.
+ */
+@function cache-set($key, $value) {
+  $new: ( $key: $value );
+  @return map-merge($CACHE, $new);
+}

@@ -1,0 +1,8 @@
+/**
+ * Sets a value on $CACHE map for $key
+ * @param {String}              $key        Key for which the value is to be set.
+ * @param {misc}                $vakue      Value to be set for $key.
+ */
+@mixin cache-set($key, $value) {
+  $CACHE: cache-set($key, $value) !global;
+}

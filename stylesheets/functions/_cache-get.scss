@@ -1,0 +1,8 @@
+/**
+ * Returns a value for a $key from $CACHE map
+ * @param  {String} $key            Key of the value to be retreived.
+ * @return {Misc}                   Value or false if there’s no value or $key.
+ */
+@function cache-get($key) {
+  @return map-get($CACHE, $key);
+}

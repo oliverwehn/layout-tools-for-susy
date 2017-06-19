@@ -1,0 +1,15 @@
+/**
+ * Prepends a value to a list in $CACHE map.
+ * @param {Map}     $map   Map the value will be set in.
+ * @param {String}  $key   Key of the list the value will be prepended to.
+ * @param {Misc}    $value Value to be prepended.
+ * @return {map}    Merged map
+ */
+@function cache-unshift($key, $value) {
+  $list: cache-get($key);
+  @if (type-of($list) != list) {
+    @return false;
+  } 
+  $new: ( $key: join(( $value ), $list, comma) );
+  @return map-merge($CACHE, $new);
+}

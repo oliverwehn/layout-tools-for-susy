@@ -1,0 +1,8 @@
+/**
+ * Pushs a value to a list on $CACHE map for $key
+ * @param {String}              $key        Key of the list to which the value is to be pushed.
+ * @param {misc}                $vakue      Value to be pushed.
+ */
+@mixin cache-push($key, $value) {
+  $CACHE: cache-push($key, $value) !global;
+}

@@ -1,0 +1,16 @@
+/**
+ * Removes last value from a list at $key on $CACHE map and returns it
+ * @param  {String} $key            Key of the list on $CACHE map.
+ * @return {Misc}                   Removed value.
+ */
+@function cache-pop($key) {
+  $list: cache-get($key);
+  @if (type-of($list) != list) {
+    @return false;
+  }
+  $index: length($list);
+  $value: nth($list, $index);
+  $new: list-remove-nth($list, $index);
+  $CACHE: cache-set($key, $new) !global;
+  @return $value;
+}

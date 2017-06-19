@@ -1,0 +1,8 @@
+/**
+ * Prepends a value to a list on $CACHE map for $key
+ * @param {String}              $key        Key of the list to which the value is to be prepended.
+ * @param {misc}                $vakue      Value to be prepended.
+ */
+@mixin cache-unshift($key, $value) {
+  $CACHE: cache-unshift($key, $value) !global;
+}

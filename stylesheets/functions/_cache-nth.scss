@@ -1,0 +1,13 @@
+/**
+ * Returns the nth value from a list at $key from $CACHE map
+ * @param  {String} $key            Key of the list the value is to be retreived from.
+ * @param  {Integer} $index         Index of the value to be retreived.
+ * @return {Misc}                   Value or false if there’s no value at $index.
+ */
+@function cache-nth($key, $index: 1) {
+  $list: cache-get($key);
+  @if (type-of($list) != list) {
+    @return false;
+  }
+  @return nth($list, $index);
+}
