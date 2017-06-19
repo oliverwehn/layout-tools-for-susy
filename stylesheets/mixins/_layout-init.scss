@@ -5,6 +5,12 @@
 @mixin layout-init($user-layouts) {
   @if(type-of($user-layouts) == map) {
     $LAYOUT: layout-extend($user-layouts) !global;
+    @include cache-set(base__font-size, ());
+    @include cache-set(base__line-height, ());
+    @include cache-set(local__font-size, ());
+    @include cache-set(local__line-height, ());
+    @include cache-set(layout, ());
+    @include cache-set(susy, ());
     $base__font-size: layout-get(base, base__font-size) !global;
     $base__line-height: layout-get(base, base__line-height) !global;
     $local__font-size: $base__font-size !global;

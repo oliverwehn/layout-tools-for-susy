@@ -1,18 +1,19 @@
 /**
  * Sets a base value and creates new absolute typographic context based on rem values.
- * @param  {px value}           $font-size                     Font size value, default is global $base__font-size.
- * @param  {px value|Boolean}   $line-height: 1.25*$font-size  Line height value, default is global $base__font-size
+ * @param  {px value}           $new-font-size                     Font size value, default is global $base__font-size.
+ * @param  {px value|Boolean}   $new-line-height: 1.25*$new-font-size  Line height value, default is global $base__font-size
  * @param  {Booelan}            $set-styles:  true             Pass false to just switch type context without settings styles.
  */
-@mixin type-base($font-size: $base__font-size, $line-height: $base__line-height, $set-styles: true) {
+@mixin type-base($new-font-size: $base__font-size, $new-line-height: $base__line-height, $set-styles: true) {
   // store current type settings temporarily
-  $base__font-size--parent: $base__font-size;
-  $base__line-height--parent: $base__line-height;
-  $local__font-size--parent: if($local__font-size, $local__font-size, $base__font-size);
-  $local__line-height--parent: if($local__line-height, $local__line-height, $base__line-height);
+  @include cache-push(base__font-size, $base__font-size);
+  @include cache-push(base__line-height, $base__line-height);
+  @include cache-push(local__font-size, if($local__font-size, $local__font-size, $base__font-size));
+  @include cache-push(local__line-height, if($local__line-height, $local__line-height, $base__line-height));
+
   // set new type values
-  $base__font-size: $font-size !global;
-  $base__line-height: $line-height !global;
+  $base__font-size: $new-font-size !global;
+  $base__line-height: $new-line-height !global;
   $local__font-size: $base__font-size !global;
   $local__line-height: $base__line-height !global;
   //set styles
@@ -24,8 +25,8 @@
   // include content
   @content;
   // restore parent type context
-  $base__font-size: $base__font-size--parent !global;
-  $base__line-height: $base__line-height--parent !global;
-  $local__font-size: $local__font-size--parent !global;
-  $local__line-height: $local__line-height--parent !global;
+  $base__font-size: cache-pop(base__font-size) !global;
+  $base__line-height: cache-pop(base__line-height) !global;
+  $local__font-size: cache-pop(local__font-size) !global;
+  $local__line-height: cache-pop(local__line-height) !global;
 }

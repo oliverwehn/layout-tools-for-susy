@@ -1,24 +1,31 @@
 /**
  * Changes the local type context without touching type base.
- * @param  {px value}         $font-size                     Font size value.
- * @param  {px value|Boolean} $line-height: 1.25*$font-size  Line height value, defaults to 1.25 times font size value.
- * @param  {Boolean}          $set-styles:  true             Pass false to just switch type context without setting styles.
+ * @param  {px value}         $new-font-size                         Font size value.
+ * @param  {px value|Boolean} $new-line-height: 1.25*$new-font-size  Line height value, defaults to 1.25 times font size value.
+ * @param  {Boolean}          $set-styles:  true                     Pass false to just switch type context without setting styles.
  */
-@mixin type-context($font-size, $line-height: 1.25 * $font-size, $set-styles: true) {
-  // store context 
-  $local__font-size--parent: $local__font-size;
-  $local__line-height--parent: $local__line-height;
-  // override context
-  $local__font-size: $font-size !global;
-  $local__line-height: $line-height !global;
-  // set styles
-  @if($set-styles) {
-    font-size: px-to-em($font-size, $local__font-size--parent);
-    line-height: px-to-em($line-height, $local__font-size);
+@mixin type-context($new-font-size, $new-line-height: 1.25 * $new-font-size, $set-styles: true) {
+  $outer__font-size: $local__font-size;
+  $outer__line-height: $local__line-height;
+  $list: cache-get(local__font-size);
+  @if (length($list) <= 1) {
+    $outer__font-size: $base__font-size;
+    $outer__line-height: $base__line-height;
   }
+  // store context 
+  @include cache-push(local__font-size, $local__font-size);
+  @include cache-push(local__line-height, $local__line-height);
+  // set styles
+  @if ($set-styles) {
+    font-size: px-to-em($new-font-size, $outer__font-size);
+    line-height: px-to-em($new-line-height, $new-font-size);
+  }
+  // override context
+  $local__font-size: $new-font-size !global;
+  $local__line-height: $new-line-height !global;
   // include content
   @content;
   // restore previous context
-  $local__font-size: $local__font-size--parent !global;
-  $local__line-height: $local__line-height--parent !global;
+  $local__font-size: cache-pop(local__font-size) !global;
+  $local__line-height: cache-pop(local__line-height) !global;
 }

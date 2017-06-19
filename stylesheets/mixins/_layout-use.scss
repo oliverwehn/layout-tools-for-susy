@@ -13,22 +13,19 @@
     $layout-key: nth($layout-key, 1);
   }
   // temporarily store layout settings of parent context
-  $LAYOUT--parent: $LAYOUT;
-  $susy--parent: $susy;
+  @include cache-push(layout, $LAYOUT);
+  @include cache-push(susy, $susy);
   // set new settings globally
   $LAYOUT: layout-build($layout-key) !global;
   $susy: layout-get(susy) !global;
   // set typographic context
   $base: map-get($LAYOUT, base);
-  $base__font-size--parent: $base__font-size;
-  $base__line-height--parent: $base__line-height;
+  @include cache-push(base__font-size, $base__font-size);
+  @include cache-push(base__line-height, $base__line-height);
+
   $base__font-size: map-get($base, base__font-size) !global;
   $base__line-height: map-get($base, base__line-height) !global;
-  // $local__font-size--parent: $local__font-size;
-  // $local__line-height--parent: $local__line-height;
-  // $local__font-size: map-get($base, local__font-size) !global;
-  // $local__line-height: map-get($base, local__line-height) !global;
-
+  
   // build media query
   @if ($layout-key == default) {
     @content;
@@ -85,10 +82,8 @@
     }
   }
   // restore parent layout settings
-  $LAYOUT: $LAYOUT--parent !global;
-  $susy: $susy--parent !global;
-  $base__font-size: $base__font-size--parent !global;
-  $base__line-height: $base__line-height--parent !global;
-  // $local__font-size: $local__font-size--parent !global;
-  // $local__line-height: $local__line-height--parent !global;
+  $LAYOUT: cache-pop(layout) !global;
+  $susy: cache-pop(susy) !global;
+  $base__font-size: cache-pop(base__font-size) !global;
+  $base__line-height: cache-pop(base__line-height) !global;
 }
