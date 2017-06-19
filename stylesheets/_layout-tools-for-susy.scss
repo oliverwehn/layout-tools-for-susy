@@ -7,11 +7,24 @@
 @import 'functions/map-set',
         'functions/map-merge-r',
         'functions/list-implode',
+        'functions/list-remove-nth',
         'placeholders/clearfix';
 
 // constants
 @import 'mixins/const',
         'functions/const';
+
+// Cache
+@import 'functions/cache-set',
+        'functions/cache-get',
+        'mixins/cache-set',
+        'functions/cache-push',
+        'mixins/cache-push',
+        'functions/cache-unshift',
+        'mixins/cache-unshift',
+        'functions/cache-nth',
+        'functions/cache-pop',
+        'functions/cache-shift';
 
 // Unit calculations
 @import 'functions/px-to-em',
